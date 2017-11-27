@@ -9,6 +9,11 @@ import (
 	"testing"
 
 	"github.com/jarcoal/httpmock"
+	"net/url"
+)
+
+var (
+	testURL = "http://noserver.nodomain.com:3123"
 )
 
 type testresults struct {
@@ -51,24 +56,19 @@ func TestRestoreDashboards(t *testing.T) {
 func TestRestoreDatasources(t *testing.T) {
 
 	//flagServerURL = flag.String("url", "", "URL of Grafana server")
-	*flagServerURL = "http://noserver.nodomain.com:3123"
+	*flagServerURL, _ = url.Parse(testURL)
 	//flagServerKey = flag.String("key", "", "API key of Grafana server")
 	*flagServerKey = "thisisnotreallyanapikey"
 	//flagTimeout   = flag.Duration("timeout", 6*time.Minute, "read flagTimeout for interacting with Grafana in seconds")
 
-	//// Dashboard matching flags.
-	//flagTags       = flag.String("tag", "", "dashboard should match all these tags")
-	//flagBoardTitle = flag.String("title", "", "dashboard title should match name")
-	//flagStarred    = flag.Bool("starred", false, "only match starred dashboards")
-	//// Common flags.
-	//flagApplyFor = flag.String("apply-for", "auto", `apply operation only for some kind of objects, available values are "auto", "all", "dashboards", "datasources", "users"`)
 	*flagApplyFor = "datasources"
 	//flagForce    = flag.Bool("force", false, "force overwrite of existing objects")
 	//flagVerbose  = flag.Bool("verbose", false, "verbose output")
 
 
-	argCommand = "restore"
-	argPath = "testdata/prometheus-test.ds.1.json"
+	//argCommand = "restore"
+	*restorePath = "testdata/prometheus-test.ds.1.json"
+	argPath      = restorePath
 
 	// For developing tests. Both of these cause this test to fail.
 	//argPath = "testdata/*.1.json"
@@ -91,7 +91,7 @@ func TestRestoreDatasources(t *testing.T) {
 
 	//TODO: Break this up into multiple functions so that the NoResponder doesn't cause us to fail Accept Header, body, etc.
 	// Create a responder which will respond with valid JSON and check what was posted to us for validity.
-	httpmock.RegisterResponder("POST", *flagServerURL + "/api/datasources",
+	httpmock.RegisterResponder("POST", testURL + "/api/datasources",
 		func(req *http.Request) (*http.Response, error) {
 
 			numRequests++

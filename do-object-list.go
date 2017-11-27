@@ -23,6 +23,7 @@ import (
 	"os"
 
 	"github.com/grafana-tools/sdk"
+	"gopkg.in/alecthomas/kingpin.v2"
 )
 
 func doObjectList(opts ...option) {
@@ -52,7 +53,7 @@ func listDashboards(cmd *command) {
 	for _, meta := range foundBoards {
 		select {
 		case <-cancel:
-			exitBySignal()
+			kingpin.Fatalf("Execution was cancelled.\n")
 		default:
 			fmt.Printf("<%d> \"%s\" %v ", meta.ID, meta.Title, meta.Tags)
 			if meta.IsStarred {
@@ -78,7 +79,7 @@ func listDatasources(cmd *command) {
 	for _, ds := range datasources {
 		select {
 		case <-cancel:
-			exitBySignal()
+			kingpin.Fatalf("Execution was cancelled.\n")
 		default:
 			fmt.Printf("<%d> \"%s\" (%s) %s\n", ds.ID, ds.Name, ds.Type, ds.URL)
 		}
@@ -100,7 +101,7 @@ func listUsers(cmd *command) {
 	for _, user := range allUsers {
 		select {
 		case <-cancel:
-			exitBySignal()
+			kingpin.Fatalf("Execution was cancelled.\n")
 		default:
 			fmt.Printf("%s \"%s\" <%s>", user.Login, user.Name, user.Email)
 			if user.IsGrafanaAdmin {

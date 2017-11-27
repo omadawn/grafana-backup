@@ -26,6 +26,7 @@ import (
 
 	"github.com/gosimple/slug"
 	"github.com/grafana-tools/sdk"
+	"gopkg.in/alecthomas/kingpin.v2"
 )
 
 func doBackup(opts ...option) {
@@ -67,7 +68,7 @@ func backupDashboards(cmd *command) {
 	for _, link := range boardLinks {
 		select {
 		case <-cancel:
-			exitBySignal()
+			kingpin.Fatalf("Execution was cancelled.\n")
 		default:
 			if rawBoard, meta, err = cmd.grafana.GetRawDashboard(link.URI); err != nil {
 				fmt.Fprintf(os.Stderr, fmt.Sprintf("%s for %s\n", err, link.URI))
@@ -108,7 +109,7 @@ func backupUsers(cmd *command) {
 	for _, user := range allUsers {
 		select {
 		case <-cancel:
-			exitBySignal()
+			kingpin.Fatalf("Execution was cancelled.\n")
 		default:
 			rawUser, _ = json.Marshal(user)
 			var fname = fmt.Sprintf("%s.user.%d.json", slug.Make(user.Login), user.OrgID)
@@ -139,7 +140,7 @@ func backupDatasources(cmd *command, datasources map[string]bool) {
 	for _, ds := range allDatasources {
 		select {
 		case <-cancel:
-			exitBySignal()
+			kingpin.Fatalf("Execution was cancelled.\n")
 		default:
 			if datasources != nil {
 				if _, ok := datasources[ds.Name]; !ok {
