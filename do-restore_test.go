@@ -1,78 +1,38 @@
 package main
 
-
 import (
 	"bytes"
 	"fmt"
 	"net/http"
+	"net/url"
 	"strings"
 	"testing"
 
 	"github.com/jarcoal/httpmock"
-	"net/url"
 )
 
 var (
 	testURL = "http://noserver.nodomain.com:3123"
 )
 
-type testresults struct {
-	serverInstanceCalled *bool
-	applyForCalled       *bool
-	matchFilenameCalled  *bool
-}
-
-func newTestresults() testresults {
-
-	value := retFalse()
-	result := testresults{serverInstanceCalled: value, applyForCalled: value, matchFilenameCalled: value}
-	result.matchFilenameCalled = value
-
-	return result
-
-	//var results testresults
-	//results.serverInstanceCalled = false
-	//results.applyForCalled       = &false
-	//results.matchFilenameCalled  = &false
-	//return results
-}
-
-func retFalse() *bool {
-	fals := false
-	return &fals
-}
-
-func retTrue() *bool {
-	tru := true
-	return &tru
-}
-
 func TestRestoreDashboards(t *testing.T) {
 	t.Log("TestRestoreDashboards not yet implemented!")
 }
 
-
 //TODO: Create multiple tests which test things like sending multiple files
+//TODO: Create something that uses a 200 response. See do-backup_test for better examples.
 func TestRestoreDatasources(t *testing.T) {
 
-	//flagServerURL = flag.String("url", "", "URL of Grafana server")
 	*flagServerURL, _ = url.Parse(testURL)
-	//flagServerKey = flag.String("key", "", "API key of Grafana server")
 	*flagServerKey = "thisisnotreallyanapikey"
-	//flagTimeout   = flag.Duration("timeout", 6*time.Minute, "read flagTimeout for interacting with Grafana in seconds")
-
 	*flagApplyFor = "datasources"
-	//flagForce    = flag.Bool("force", false, "force overwrite of existing objects")
-	//flagVerbose  = flag.Bool("verbose", false, "verbose output")
-
-
-	//argCommand = "restore"
 	*restorePath = "testdata/prometheus-test.ds.1.json"
-	argPath      = restorePath
 
 	// For developing tests. Both of these cause this test to fail.
-	//argPath = "testdata/*.1.json"
-	//argPath = "testdata/promartheus-test.ds.1.json"
+	//*restorePath = "testdata/*.1.json"
+	//*restorePath = "testdata/promartheus-test.ds.1.json"
+
+	argPath      = restorePath
 
 	// Some variables to track the results of the test
 

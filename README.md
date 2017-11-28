@@ -5,6 +5,22 @@ It uses [Grafana client SDK](https://github.com/grafana-tools/sdk).
 
 **Work in progress. Current state: it may works, may not. Depends on build. Don't use it yet!**
 
+## Config file
+
+The addition of kingpin allows us to provide arguments from a file. Simply provide the file as an argument in the form
+@filename. The contents of the file should be a single line for each argument exactly as it would appear on the command line. 
+
+```
+$ cat testConfigFile 
+restore
+--key=eyJrANfliwefmlasidf-328948sfnsdflkjZ1N2SHNFek05akZwbUczWVUiLCJuIjoiQmFja3VwLWtleSIsImlkIjoxfQ==
+--url=http://grafana-test.example.com:3000
+--verbose
+backup/app-team-roll-up-start.db.json
+backup/prometheus-test.ds.1.json
+
+```
+
 ## Examples
 
 	$ grafana-backup -url http://127.1:3000 -key xxxxxxxx -tag tag1,tag2 -title "sample api"" ls
