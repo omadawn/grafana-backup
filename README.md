@@ -5,6 +5,12 @@ It uses [Grafana client SDK](https://github.com/grafana-tools/sdk).
 
 **Work in progress. Current state: it may works, may not. Depends on build. Don't use it yet!**
 
+## Command line flags
+This doesn't really belong in the README but the README needs to be updated so I'm putting notes in here.
+
+Added kingpin and changed a bunch of crap to make it work.
+https://github.com/alecthomas/kingpin#repeatable-flags
+
 ## Config file
 
 The addition of kingpin allows us to provide arguments from a file. Simply provide the file as an argument in the form
