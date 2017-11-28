@@ -21,6 +21,21 @@ backup/prometheus-test.ds.1.json
 
 ```
 
+## Command line completion
+
+Kingpin also provides command line completion for bash and zsh.
+
+
+bash
+```
+eval "$(grafana-backup --completion-script-bash)"
+```
+
+zsh
+```
+eval "$(grafana-backup --completion-script-zsh)"
+```
+
 ## Examples
 
 	$ grafana-backup -url http://127.1:3000 -key xxxxxxxx -tag tag1,tag2 -title "sample api"" ls
